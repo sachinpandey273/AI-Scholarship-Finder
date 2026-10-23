@@ -8,7 +8,6 @@ services:
     dockerContext: backend
     dockerfilePath: backend/Dockerfile
     healthCheckPath: /healthz
-    preDeployCommand: alembic upgrade head
     envVars:
       - key: ENVIRONMENT
         value: production
