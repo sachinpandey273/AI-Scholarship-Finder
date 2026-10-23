@@ -1,0 +1,70 @@
+services:
+  - type: web
+    name: scholarship-finder-api
+    runtime: docker
+    region: singapore
+    plan: starter
+    dockerContext: backend
+    dockerfilePath: backend/Dockerfile
+    healthCheckPath: /healthz
+    preDeployCommand: alembic upgrade head
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        fromDatabase: { name: scholarship-finder-db, property: connectionString }
+      - key: REDIS_URL
+        fromService: { name: scholarship-finder-redis, type: keyvalue, property: connectionString }
+      - key: JWT_ISSUER
+        sync: false
+      - key: JWT_AUDIENCE
+        sync: false
+      - key: JWT_PUBLIC_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+  - type: worker
+    name: scholarship-finder-worker
+    runtime: docker
+    region: singapore
+    plan: starter
+    dockerContext: backend
+    dockerfilePath: backend/Dockerfile
+    dockerCommand: celery -A app.workers.celery_app.celery_app worker --loglevel=INFO
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        fromDatabase: { name: scholarship-finder-db, property: connectionString }
+      - key: REDIS_URL
+        fromService: { name: scholarship-finder-redis, type: keyvalue, property: connectionString }
+      - key: JWT_ISSUER
+        sync: false
+      - key: JWT_AUDIENCE
+        sync: false
+      - key: JWT_PUBLIC_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+  - type: web
+    name: scholarship-finder-web
+    runtime: docker
+    region: singapore
+    plan: starter
+    dockerContext: frontend
+    dockerfilePath: frontend/Dockerfile
+    envVars:
+      - key: NEXT_PUBLIC_API_BASE_URL
+        fromService: { name: scholarship-finder-api, type: web, property: hostport }
+  - type: keyvalue
+    name: scholarship-finder-redis
+    plan: 256mb
+    maxmemoryPolicy: noeviction
+databases:
+  - name: scholarship-finder-db
+    region: singapore
+    plan: basic-256mb
+    databaseName: scholarship
+    user: scholarship

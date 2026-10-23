@@ -1,0 +1,27 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  legacy-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install -r requirements.txt
+      - run: python -m pytest tests -q
+  api-static-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install ./backend
+      - run: python -m compileall -q backend
+      - run: cd backend && python -c "from app.main import app; assert app.openapi()['info']['version'] == '1.0.0'"
+  frontend-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: cd frontend && npm install && npm run build

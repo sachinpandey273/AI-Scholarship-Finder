@@ -1,0 +1,37 @@
+{
+  "full_name": "Rahul Sharma",
+  "email": "rahul.sharma@example.edu",
+  "nationality": "India",
+  "current_degree": "BTech in Computer Science and Engineering",
+  "major": "Computer Science",
+  "cgpa": 8.2,
+  "gpa_scale": 10.0,
+  "expected_graduation_year": 2025,
+  "skills": [
+    "Python",
+    "Machine Learning",
+    "Deep Learning",
+    "PyTorch",
+    "Natural Language Processing",
+    "SQL",
+    "Git",
+    "Docker"
+  ],
+  "projects": [
+    "Vision-based Plant Disease Detection using Deep Convolutional Networks",
+    "Multi-Agent Traffic Signal Optimization System with Deep Q-Networks",
+    "End-to-End Generative AI Research Paper Summarizer"
+  ],
+  "github_username": "rahul-ml-dev",
+  "target_degree": "Master of Science (MSc / MS)",
+  "target_subject": "Computer Science / Artificial Intelligence",
+  "preferred_countries": [
+    "Canada",
+    "Germany",
+    "Singapore"
+  ],
+  "target_intake": "Fall 2026",
+  "english_test_status": "IELTS 7.5 (Academic)",
+  "funding_requirement": "Full tuition and living stipend or substantial scholarship",
+  "user_verified": true
+}

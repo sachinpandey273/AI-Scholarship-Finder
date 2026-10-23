@@ -1,0 +1,36 @@
+{
+  "full_name": "Maria Santos",
+  "email": "maria.santos@example.org",
+  "nationality": "Brazil",
+  "current_degree": "Bachelor of Science in Computational Mathematics",
+  "major": "Applied Mathematics & Computing",
+  "cgpa": 3.85,
+  "gpa_scale": 4.0,
+  "expected_graduation_year": 2025,
+  "skills": [
+    "Python",
+    "C++",
+    "Numerical Optimization",
+    "TensorFlow",
+    "Statistics",
+    "Linux",
+    "Linear Algebra",
+    "Data Analysis"
+  ],
+  "projects": [
+    "High-Dimensional Topological Data Analysis for Genomic Sequences",
+    "Monte Carlo Simulations for Renewable Energy Grid Resilience",
+    "Stochastic Gradient Descent Variant for Constrained Optimization"
+  ],
+  "github_username": "mariasantos-math",
+  "target_degree": "Master of Science (MSc)",
+  "target_subject": "Computational Sciences and Data Engineering",
+  "preferred_countries": [
+    "Germany",
+    "Canada"
+  ],
+  "target_intake": "Fall 2026",
+  "english_test_status": "TOEFL iBT 105",
+  "funding_requirement": "Full Tuition + Research Fellowship",
+  "user_verified": true
+}

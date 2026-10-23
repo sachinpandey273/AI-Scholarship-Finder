@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: scholarship
+      POSTGRES_USER: scholarship
+      POSTGRES_PASSWORD: scholarship
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scholarship -d scholarship"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes: [postgres_data:/var/lib/postgresql/data]
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  api:
+    build: ../backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://scholarship:scholarship@postgres:5432/scholarship
+      REDIS_URL: redis://redis:6379/0
+    ports: ["8000:8000"]
+    volumes: [uploads_data:/var/lib/scholarship/uploads]
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+  worker:
+    build: ../backend
+    command: celery -A app.workers.celery_app.celery_app worker --loglevel=INFO
+    environment:
+      DATABASE_URL: postgresql+psycopg://scholarship:scholarship@postgres:5432/scholarship
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    volumes: [uploads_data:/var/lib/scholarship/uploads]
+  frontend:
+    build: ../frontend
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
+    ports: ["3000:3000"]
+    depends_on:
+      api: {condition: service_started}
+volumes:
+  postgres_data:
+  uploads_data:
