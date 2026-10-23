@@ -62,6 +62,7 @@ services:
     name: scholarship-finder-redis
     plan: 256mb
     maxmemoryPolicy: noeviction
+    ipAllowList: []
 databases:
   - name: scholarship-finder-db
     region: singapore
